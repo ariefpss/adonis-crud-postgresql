@@ -1,5 +1,7 @@
 'use strict'
 
+const UserController = require('../app/Controllers/Http/UserController');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -14,8 +16,9 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use('Route');
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+Route.get('user', 'UserController.index');
+Route.post('user/signup', 'UserController.store');
+Route.put('user/update/:id', 'UserController.update')
+Route.delete('user/delete/:id', 'UserController.destroy')
