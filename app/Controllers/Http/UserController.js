@@ -33,17 +33,11 @@ class UserController {
     
     async update({request, response, params}){
         const id = params.id;
-        const {username, password, nwemail} = request.only(['username', 'password', 'nwemail']);
+        const {nwusername, nwemail} = request.only(['nwusername', 'nwemail']);
 
         const user = await User.findByOrFail('id', id);
 
-        const passdHash = await Hash.verify(password, user.password);
-        
-        if(!passdHash){
-            return response.status(400).send({message: {error: 'Password incorrect'}});
-        };
-
-        user.username = username;
+        user.username = nwusername;
         user.email = nwemail;
 
         await user.save();

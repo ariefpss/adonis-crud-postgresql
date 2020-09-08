@@ -1,6 +1,7 @@
 'use strict'
 
 const UserController = require('../app/Controllers/Http/UserController');
+const { route } = require('@adonisjs/framework/src/Route/Manager');
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,10 @@ const UserController = require('../app/Controllers/Http/UserController');
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.get('user', 'UserController.index');
+Route.post('user/login', 'AuthController.login');
+Route.post('user/logout', 'AuthController.logout').middleware(['auth']);
+
 Route.post('user/signup', 'UserController.store');
-Route.put('user/update/:id', 'UserController.update')
-Route.delete('user/delete/:id', 'UserController.destroy')
+Route.get('user', 'UserController.index').middleware(['auth']);
+Route.put('user/update/:id', 'UserController.update').middleware(['auth']);
+Route.delete('user/delete/:id', 'UserController.destroy').middleware(['auth']);
