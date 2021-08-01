@@ -1,5 +1,9 @@
 'use strict'
 
+const RouteGroup = require('@adonisjs/framework/src/Route/Group')
+const { route } = require('@adonisjs/framework/src/Route/Manager');
+const UserController = require('../app/Controllers/Http/UserController');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -16,4 +20,9 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.group(() => {
+    Route.post('create', 'UserController.store');
+    Route.get('users', 'UserController.index');
+    Route.put('update/:id', 'UserController.update');
+    Route.delete('delete/:id', 'UserController.delete');
+}).prefix('user');
